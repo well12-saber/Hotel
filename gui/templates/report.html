@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>Отчет</title>
+</head>
+<body class="container">
+
+    {% include 'menu.html' %}
+    
+    <form method="POST" action="">
+        {% csrf_token %}
+        <p>
+            <label>Введите дату начала</label><br>
+            <input type="date" name="fstdate" required/>
+        </p>
+        <p>
+            <label>Введите дату конца</label><br>
+            <input type="date" name="scddate" required/>
+        </p>
+        <input type="submit" value="Получить финансовый отчет" >
+    </form>
+    
+    <h2>Отчет</h2>
+    <table>
+        {% if rooms or services%}
+        <tr><td>Summary</td> <td>{{ result }}</td> 
+        </tr>
+        {% endif %}
+
+        {% for room in rooms %}
+        <tr><td>{{ room.type }}</td> <td>{{ room.price }}</td> 
+        </tr>
+        {% endfor %}
+
+        {% for service in services %}
+        <tr><td>{{ service.type }}</td> <td>{{ service.price }}</td> 
+        </tr>
+        {% endfor %}
+
+    </table>
+    
+</body>
+</html>

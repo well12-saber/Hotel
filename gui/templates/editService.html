@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title></title>
+</head>
+<body class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label>Введите цену</label><br>
+            <input type="number" name="price" value="{{service.price}}" required/>
+        </p>
+        <p>
+            <label>Введите тип</label><br>
+            <input type="text" name="type" value="{{service.type}}" required/>
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <title>Комнаты клиентов</title>
+</head>
+<body class="container">
+
+    {% include 'menu.html' %}
+    <button onclick="rollUp()">Add</button>
+    
+    <div id="myDIV">
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            <p>
+                <label>Введите дату вьезда</label><br>
+                <input type="date" name="date_1" value="{{date1}}" required/>
+            </p>
+            <p>
+                <label>Введите дату выезда</label><br>
+                <input type="date" name="date_2" value="{{date2}}" required/>
+            </p>
+            <input type="submit" value="Фильтровать" >
+        </form>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            <p>
+                <label>Введите имя клиента</label><br>
+                <select name="client.id">
+                    {% for client in clientList %}
+                        <option value="{{client.0}}">{{client.1}}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p>
+                <label>Введите номер комнаты</label><br>
+                <select name="room">
+                    {% for room in roomList %}
+                        <option>{{room.id}}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p hidden>
+                <label>Введите дату вьезда</label><br>
+                <input type="" name="date_in" value="{{date1}}" required/>
+            </p>
+            <p hidden>
+                <label>Введите дату выезда</label><br>
+                <input type="" name="date_out" value="{{date2}}" required/>
+            </p>
+            <input type="submit" value="Сохранить" >
+        </form>
+    </div>
+    
+    <h2>Список комнат клиентов</h2>
+    <table>
+        {% for record in clientsRooms %}
+        <tr> 
+            <td>{{ record.client.name }}</td> <td>{{ record.room.id }}</td>
+            <td>{{ record.date_in }}</td> <td>{{ record.date_out }}</td> 
+            <td><a href="editClientRoom/{{record.id}}">&#9998;</a> | <a href="delete/{{record.id}}">&#10006;</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>
